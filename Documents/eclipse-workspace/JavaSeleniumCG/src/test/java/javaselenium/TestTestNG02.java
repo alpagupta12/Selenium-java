@@ -10,26 +10,35 @@ import org.testng.annotations.Test;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestTestNG02 {
-	
+
 	@Test
-	public void googleSearch(){
-		
+	public void googleSearch() throws InterruptedException {
+
 		WebDriver driver;
-		
+
 		WebDriverManager.chromedriver().setup();
-		
+
 		driver = new ChromeDriver();
+		Thread.sleep(3000);
 		driver.get("http://www.google.com");
 		WebElement searchBox = driver.findElement(By.xpath("/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input"));
-		
+
 		searchBox.sendKeys("Google Text");
-		searchBox.sendKeys(Keys.ENTER); 
-		
-	
-		driver.close();
-		
-		
-		
+		searchBox.sendKeys(Keys.ENTER);
+		String currentUrl = driver.getCurrentUrl();
+		System.out.println("The current URL is:" + currentUrl);
+		System.out.println("The title is:" + driver.getTitle());
+		driver.navigate().to("http://demoqa.com");
+		driver.navigate().back();
+
+		Thread.sleep(3000);
+
+		driver.navigate().forward();
+		Thread.sleep(3000);
+		driver.navigate().refresh();
+
+		driver.quit();
+
 	}
 
 }
